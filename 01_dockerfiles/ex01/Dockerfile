@@ -1,17 +1,21 @@
 FROM debian
-MAINTAINER jgengo <jgengo@student.42.fr>
 
-EXPOSE 9987/udp 30033 10011
+MAINTAINER thmelen <thmelen@student.42.fr>
 
-RUN apt-get update \
-	&& apt-get install wget bzip2 wget ca-certificates -y \
-	&& adduser --disabled-password --gecos "" teamspeak
+EXPOSE 9987/udp 10011 30033 
 
-WORKDIR /home/teamspeak
+RUN apt-get update && \
+apt-get install bzip2 ca-certificates apt-utils -y
 
-RUN wget http://dl.4players.de/ts/releases/3.0.11.1/teamspeak3-server_linux-amd64-3.0.11.1.tar.gz \
-	&& tar -xzvf *.tar.gz && rm *.tar.gz
+WORKDIR /teamspeakserver
 
-WORKDIR teamspeak3-server_linux-amd64
+ADD http://dl.4players.de/ts/releases/3.5.0/teamspeak3-server_linux_amd64-3.5.0.tar.bz2 teamspeak.tar.bz2
 
-CMD ["sh", "ts3server_minimal_runscript.sh"]
+RUN chmod 777 teamspeak.tar.bz2 && \
+	tar -xvf teamspeak.tar.bz2 && \
+	rm teamspeak.tar.bz2
+
+WORKDIR /teamspeakserver/teamspeak3-server_linux_amd64
+RUN touch .ts3server_license_accepted
+
+ENTRYPOINT sh ts3server_minimal_runscript.sh
