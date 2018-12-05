@@ -1,16 +1,10 @@
-#TETRIS
+#PHP MYSQL APACHE Env
 
-FROM debian
+FROM php:7.2.7-fpm-alpine3.7
 
 MAINTAINER thmelen <thmelen@student.42.fr>
 
-RUN apt-get update && apt-get upgrade
-RUN apt-get install -y gcc git make binutils clang libncurses5-dev g++
+RUN apk update -y &&
+	apk upgrade -y
 
-RUN git clone https://github.com/alexdantas/yetris.git
-
-WORKDIR yetris
-
-RUN make
-
-ENTRYPOINT make run
+RUN docker-php-ext-install mysqli

@@ -1,10 +1,15 @@
+#TETRIS
+
 FROM debian
 
-RUN apt-get update && \
-apt-get upgrade
+MAINTAINER thmelen <thmelen@student.42.fr>
 
-ADD https://github.com/browsh-org/browsh/releases/download/v1.5.0/browsh_1.5.0_linux_amd64.deb mario_browsh.deb
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install -y gcc git make binutils clang libncurses5-dev g++
+RUN git clone https://github.com/alexdantas/yetris.git
 
-RUN apt-get install -y ./mario_browsh.deb
+WORKDIR yetris
 
-ENTRYPOINT browsh https://pikomit.com
+RUN make
+
+ENTRYPOINT make run
