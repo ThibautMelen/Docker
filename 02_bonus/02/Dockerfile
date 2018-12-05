@@ -1,25 +1,7 @@
-#FROM node
-
-#MAINTAINER thmelen <thmelen@student.42.fr>
-
-#WORKDIR /app
-
-#ADD package.json /app
-
-#RUN npm install
-
-#COPY . /app
-
-#EXPOSE 8081
-
-#ENTRYPOINT node index.js
-
-
 FROM node:7
-WORKDIR /usr/src/app
-COPY package.json .
+WORKDIR /app
+COPY package.json /app
 RUN npm install
-COPY . .
-EXPOSE 8081
+COPY . /app
 CMD node index.js
-
+EXPOSE 8082
